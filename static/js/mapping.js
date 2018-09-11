@@ -8,7 +8,7 @@ function chooseColor(price) {
   else if(price < 600){ return "#FFFF66";}
   else if(price < 700){ return "#FF6666";}
   else if(price > 800){ return "#330000";}
-  //else if(price > 175){ return "white";}
+
 }
 
 data = coord_data;
@@ -34,7 +34,7 @@ data = coord_data;
   featureList.forEach(feature =>{  
     var coords = [feature.latitude,feature.longitude];
     var price = feature.price;
-
+    var image = feature.picture_url;
     //console.log(coords);
 
     var color = d3.scaleSequential(d3.interpolateLab("red", "black"))
@@ -47,7 +47,7 @@ data = coord_data;
         fillColor: chooseColor(parseInt(price)),
         fillOpacity:0.8,
         radius: rad
-      }).bindPopup("<h1>Price: " + price + "</h1>")
+      }).bindPopup("<h2>Price: " + price + "</h2><br><hr><img src="+image+"height='70' width='70'>")
       .addTo(myMap);
   });
 

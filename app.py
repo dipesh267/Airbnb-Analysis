@@ -72,7 +72,7 @@ def get_coord():
             'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
             'reviews_per_month']
     response_df.columns = header
-    coord_df = response_df[["longitude","latitude","price"]]
+    coord_df = response_df[["longitude","latitude","price","picture_url"]]
     #print(coord_df)
     return_file = json.loads(coord_df.to_json(orient='records'))
     #print(return_file)

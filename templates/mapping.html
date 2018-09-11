@@ -28,12 +28,9 @@
     <script>
         //https://stackoverflow.com/questions/11178426/how-can-i-pass-data-from-flask-to-javascript-in-a-template
         //http://jinja.pocoo.org/docs/2.10/
-
         var coord_data = {{data|tojson}}; //data from python converted to json
-        //console.log(typeof coord_data)
-        //console.log(coord_data[0])
-        //draw(coord_data);
     </script>
+    
     <!--the below is used to make sure the javascripts are found when rendering page from flask-->
     <!-- https://stackoverflow.com/questions/46349370/javascript-file-not-found-using-relative-path-during-flask-render-template -->
     <script src="{{url_for('static', filename='js/config.js')}}"></script>
