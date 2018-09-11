@@ -29,33 +29,54 @@ app = Flask(__name__)
 # Use Pandas to perform the sql query
 engine = create_engine("sqlite:///Data/airbnb.sqlite", echo=False)
 
+@app.route("/")
+def welcome():
+    return render_template('junk.html')
+
 @app.route("/listingsall")
 def listingsall():
-    """Return a list of sample names."""
-    
-    # Use `engine.execute` to select and display the first 10 rows from the emoji table
     response = engine.execute('SELECT * FROM listings').fetchall()
     response_df = pd.DataFrame(response)
     header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
-         'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
-         'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
-         'reviews_per_month']
+            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
+            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
+            'reviews_per_month']
     response_df.columns = header
     returnjson = json.loads(response_df.to_json(orient='records'))
     #print(response)
-    return jsonify(returnjson)
+    #return jsonify(returnjson)
+    return render_template('listings.html',data=returnjson)
 
-@app.route("/coordinates")
-def coordinates():
-    """Return a list of sample names."""
-    
-    # Use `engine.execute` to select and display the first 10 rows from the emoji table
-    response = engine.execute('SELECT 20,19 FROM listings').fetchall()
+@app.route("/coord-json")
+def coord_json():
+    # response = engine.execute('SELECT 20,19 FROM listings').fetchall()
+    # response_df = pd.DataFrame(response)
+    response = engine.execute('SELECT * FROM listings').fetchall()
     response_df = pd.DataFrame(response)
+    header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
+            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
+            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
+            'reviews_per_month']
+    response_df.columns = header
+    return_file = json.loads(response_df[["longitude","latitude","price"]].to_json(orient='records'))
+    return jsonify(return_file)
 
-    file_j = json.loads(response_df.to_json(orient='records'))
-    #print(response)
-    return jsonify(file_j)
+@app.route("/coord")
+def get_coord():
+    # response = engine.execute('SELECT 20,19 FROM listings').fetchall()
+    # response_df = pd.DataFrame(response)
+    response = engine.execute('SELECT * FROM listings').fetchall()
+    response_df = pd.DataFrame(response)
+    header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
+            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
+            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
+            'reviews_per_month']
+    response_df.columns = header
+    coord_df = response_df[["longitude","latitude","price"]]
+    #print(coord_df)
+    return_file = json.loads(coord_df.to_json(orient='records'))
+    #print(return_file)
+    return render_template('mapping.html',data=return_file)
 
 if __name__ == "__main__":
     app.run()
