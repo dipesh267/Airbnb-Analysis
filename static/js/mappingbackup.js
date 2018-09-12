@@ -14,7 +14,7 @@ function chooseColor(price) {
 data = coord_data;
 
   // Once we get a response, send the data.features object to the createFeatures function
-  //console.log(data);
+  console.log(data);
 
   var myMap = L.map("map", {
     center: [37.7749, -122.4194],

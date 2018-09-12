@@ -43,14 +43,11 @@ def listingsall():
             'reviews_per_month']
     response_df.columns = header
     returnjson = json.loads(response_df.to_json(orient='records'))
-    #print(response)
-    #return jsonify(returnjson)
+    
     return render_template('listings.html',data=returnjson)
 
 @app.route("/coord-json")
 def coord_json():
-    # response = engine.execute('SELECT 20,19 FROM listings').fetchall()
-    # response_df = pd.DataFrame(response)
     response = engine.execute('SELECT * FROM listings').fetchall()
     response_df = pd.DataFrame(response)
     header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
@@ -63,8 +60,6 @@ def coord_json():
 
 @app.route("/coord")
 def get_coord():
-    # response = engine.execute('SELECT 20,19 FROM listings').fetchall()
-    # response_df = pd.DataFrame(response)
     response = engine.execute('SELECT * FROM listings').fetchall()
     response_df = pd.DataFrame(response)
     header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
@@ -73,9 +68,9 @@ def get_coord():
             'reviews_per_month']
     response_df.columns = header
     coord_df = response_df[["longitude","latitude","price","picture_url"]]
-    #print(coord_df)
+    
     return_file = json.loads(coord_df.to_json(orient='records'))
-    #print(return_file)
+    
     return render_template('mapping.html',data=return_file)
 
 if __name__ == "__main__":
