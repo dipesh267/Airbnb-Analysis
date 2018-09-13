@@ -30,6 +30,9 @@ body {
     opacity: 0.7;
 }
 
+.table {
+  font-size: 10px;
+}
 .header-container{
   background-color:white;
 }
