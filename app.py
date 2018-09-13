@@ -27,11 +27,11 @@ app = Flask(__name__)
 # # Create our session (link) from Python to the DB
 # Listings_table = Base.classes.listings
 # Use Pandas to perform the sql query
-engine = create_engine("sqlite:///Data/airbnb.sqlite", echo=False)
+engine = create_engine("sqlite:///db/airbnb.sqlite", echo=False)
 
 @app.route("/")
 def welcome():
-    return render_template('junk.html')
+    return render_template('testbullet.html')
 
 @app.route("/listingsall")
 def listingsall():
@@ -45,6 +45,19 @@ def listingsall():
     returnjson = json.loads(response_df.to_json(orient='records'))
     
     return render_template('listings.html',data=returnjson)
+
+@app.route("/listings-json")
+def listings_json():
+    response = engine.execute('SELECT * FROM listings').fetchall()
+    response_df = pd.DataFrame(response)
+    header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
+            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
+            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
+            'reviews_per_month']
+    response_df.columns = header
+    returnjson = json.loads(response_df.to_json(orient='records'))
+    
+    return jsonify(returnjson)
 
 @app.route("/coord-json")
 def coord_json():
