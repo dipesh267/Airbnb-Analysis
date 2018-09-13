@@ -33,6 +33,15 @@ engine = create_engine("sqlite:///db/airbnb.sqlite", echo=False)
 def welcome():
     return render_template('testbullet.html')
 
+@app.route("/bullet")
+def bullet():
+    return render_template('testbullet.html')
+
+@app.route("/box")
+def box():
+    return render_template('testbox.html')
+
+
 @app.route("/listingsall")
 def listingsall():
     response = engine.execute('SELECT * FROM listings').fetchall()
