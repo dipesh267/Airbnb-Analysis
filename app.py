@@ -33,7 +33,30 @@ engine = create_engine("sqlite:///db/airbnb.sqlite", echo=False)
 
 @app.route("/")
 def welcome():
-    return render_template('testbullet.html')
+    a = "<h1>These are the valid endpoints in this project</h1>"
+    b = "<h3>/index</h3>"
+    c = "<h3>/listingsall</h3>"
+    d = "<h3>/listings-json</h3>"
+    e = "<h3>/coord-json</h3>"
+    f = "<h3>/pie-json</h3>"
+    g = "<h3>/map-geojson</h3>"
+
+    return a+b+c+d+e+g
+
+@app.route("/index")
+def get_landing():
+    response = engine.execute('SELECT * FROM listings').fetchall()
+    response_df = pd.DataFrame(response)
+    header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
+            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
+            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
+            'reviews_per_month']
+    response_df.columns = header
+    coord_df = response_df[["longitude","latitude","price","picture_url"]]
+    
+    return_file = json.loads(coord_df.to_json(orient='records'))
+    
+    return render_template('index.html',data=return_file)
 
 @app.route("/bullet")
 def bullet():
@@ -82,21 +105,6 @@ def coord_json():
     return_file = json.loads(response_df[["longitude","latitude","price"]].to_json(orient='records'))
     return jsonify(return_file)
 
-@app.route("/coord")
-def get_coord():
-    response = engine.execute('SELECT * FROM listings').fetchall()
-    response_df = pd.DataFrame(response)
-    header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
-            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
-            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
-            'reviews_per_month']
-    response_df.columns = header
-    coord_df = response_df[["longitude","latitude","price","picture_url"]]
-    
-    return_file = json.loads(coord_df.to_json(orient='records'))
-    
-    return render_template('mapping.html',data=return_file)
-
 @app.route("/pie-json")
 def pie_json():
     response = engine.execute('SELECT * FROM listings').fetchall()
@@ -109,7 +117,7 @@ def pie_json():
     return_file = json.loads(response_df[["neighbourhood","id"]].to_json(orient='records'))
     return jsonify(return_file)
 
-@app.route("/map-data")
+@app.route("/map-geojson")
 def get_mapdata():
 
    #01 Read in data
