@@ -7,8 +7,11 @@ body {
   }
   
 #map {
-  height: 500px;
+  height: 300px;
 }
+/* .container{
+  padding: 0px 0px 15px 0px;
+} */
 .map_container {
   background:lightgrey;
 }
@@ -35,6 +38,9 @@ body {
 }
 .header-container{
   background-color:white;
+}
+.chart_container{
+  height: 800;
 }
 p{
 font-family: 'Roboto Slab', serif;
@@ -87,6 +93,61 @@ font-family: 'Roboto Slab', serif;
   background-color: cornflowerblue;
 }
 
+.hr-other {
+  border: 0;
+  height: 3px;
+  background-color: tomato;
+}
+
+.btn {
+  padding: 5px 60px;
+  font-size: 30px;
+  color: cornflowerblue;
+  border-radius: 5px;
+  font-family: 'Roboto Slab', serif;
+}
+
+/* Box chart CSS */
+
+.boxchart{
+  text-align: center;
+}
+.box {
+  font: 10px sans-serif;
+}
+
+.box line,
+.box rect,
+.box circle {
+  fill: #fff;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.box .center {
+  stroke-dasharray: 3,3;
+}
+
+.box .outlier {
+  fill: none;
+  stroke: #ccc;
+}
+/* end of Box chart CSS */
+
+/* Bullet CSS */
+
+.bullet { font: 10px sans-serif; }
+.bullet .marker { stroke: #000; stroke-width: 2px; }
+.bullet .tick line { stroke: #666; stroke-width: .5px; }
+.bullet .range.s0 { fill: #eee; }
+.bullet .range.s1 { fill: #ddd; }
+.bullet .range.s2 { fill: #ccc; }
+.bullet .measure.s0 { fill: lightsteelblue; }
+.bullet .measure.s1 { fill: steelblue; }
+.bullet .title { font-size: 14px; font-weight: bold; }
+.bullet .subtitle { fill: #999; }
+
+/* end of Bullet CSS */
 
 @media screen and (max-width:768px){
   .primary-content{

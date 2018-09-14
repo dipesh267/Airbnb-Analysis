@@ -35,10 +35,10 @@ data = coord_data;
     var coords = [feature.latitude,feature.longitude];
     var price = feature.price;
     var image = feature.picture_url;
-    //console.log(coords);
+    //console.log(image);
 
-    var color = d3.scaleSequential(d3.interpolateLab("red", "black"))
-    .domain([0, 10]);
+    // var color = d3.scaleSequential(d3.interpolateLab("red", "black"))
+    // .domain([0, 10]);
     var rad = 0;
     if (price > 175){ rad = 30 } else { rad = 15}
   //console.log(color(magnitude));
@@ -47,7 +47,7 @@ data = coord_data;
         fillColor: chooseColor(parseInt(price)),
         fillOpacity:0.8,
         radius: rad
-      }).bindPopup("<h2>Price: " + price + "</h2><br><hr><img src="+image+"height='70' width='70'>")
+      }).bindPopup("<h2>Price: " + price + "</h2>")
       .addTo(myMap);
   });
 

@@ -12,6 +12,8 @@ from sqlalchemy import create_engine
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
+import geopandas as gpd
+
 app = Flask(__name__)
 
 #################################################
@@ -94,6 +96,37 @@ def get_coord():
     return_file = json.loads(coord_df.to_json(orient='records'))
     
     return render_template('mapping.html',data=return_file)
+
+@app.route("/pie-json")
+def pie_json():
+    response = engine.execute('SELECT * FROM listings').fetchall()
+    response_df = pd.DataFrame(response)
+    header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
+            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
+            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
+            'reviews_per_month']
+    response_df.columns = header
+    return_file = json.loads(response_df[["neighbourhood","id"]].to_json(orient='records'))
+    return jsonify(return_file)
+
+@app.route("/map-data")
+def get_mapdata():
+
+   #01 Read in data
+   path = "static/data/filtered_listings.csv"
+   data = pd.read_csv(path)
+   geodata =gpd.read_file('static/data/neighbourhoods.geojson')
+
+   #02 Create the summmary stats and add to JSON file
+   summarydata = data.groupby('neighbourhood').mean()
+   summarydata.reset_index(inplace = True )
+   geodata = pd.merge(geodata, summarydata, how = 'left', on = 'neighbourhood')
+
+   # 03 Convert back to Dictionary and JSONIFY
+   geodict = json.loads(geodata.to_json(na = 'null'))
+
+   #04 Render to site
+   return jsonify(geodict)
 
 if __name__ == "__main__":
     app.run()
