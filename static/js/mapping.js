@@ -18,13 +18,13 @@ data = coord_data;
 
   var myMap = L.map("map", {
     center: [37.7749, -122.4194],
-    zoom: 13
+    zoom: 12
   });
 
   // console.log(data.features);
   L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-    maxZoom: 15,
+    maxZoom: 18,
     id: "mapbox.streets",
     accessToken: API_KEY
     }).addTo(myMap);
@@ -54,12 +54,12 @@ data = coord_data;
   var legend = L.control({ position: "bottomright" });
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "info legend");
-    var colors = ["#fff5f0","#fee0d2","#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#cb181d","#99000d"];
-    var labels = [" < 1 "," < 2 "," < 3 "," < 4 "," < 5 "," < 6 "," < 7 "," > 7"];
+    var colors = ["#C0C0C0","#FF66FF","#6666FF","#66FFFF","#66FF66","#FFFF66","#FF6666","#330000"];
+    var labels = [" < 100 "," < 200 "," < 300 "," < 400 "," < 500 "," < 600 "," < 700 "," > 800"];
     
     for (var i = 0; i < labels.length; i++) {
       div.innerHTML +=
-          '<i style="background-color:' + colors[i] + '">'+labels[i]+'</i><br>';
+          '<i style="font-size: 10px; background-color:' + colors[i] + '">'+labels[i]+'</i><br>';
     }
     return div;
   };

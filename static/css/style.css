@@ -21,7 +21,7 @@ body {
   font-weight: bold;
   color:black;
   text-align: justify;
-  background: white;
+  background: lightgrey;
   border-radius: 5px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
@@ -108,47 +108,41 @@ font-family: 'Roboto Slab', serif;
   font-family: 'Roboto Slab', serif;
 }
 
-/* Box chart CSS */
 
-.boxchart{
-  text-align: center;
-}
-.box {
-  font: 10px sans-serif;
-}
+/* Dash CSS */
 
-.box line,
-.box rect,
-.box circle {
-  fill: #fff;
-  stroke: #000;
-  stroke-width: 1.5px;
-}
+/*path {  stroke: #fff; }*/
 
-.box .center {
-  stroke-dasharray: 3,3;
-}
+path:hover {  opacity:0.9; }
+rect:hover {  fill:blue; }
+.axis {  font: 10px sans-serif; }
+.legend tr{    border-bottom:1px solid grey; }
+.legend tr:first-child{    border-top:1px solid grey; }
 
-.box .outlier {
+.axis path,
+.axis line {
   fill: none;
-  stroke: #ccc;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
-/* end of Box chart CSS */
 
-/* Bullet CSS */
+.x.axis path {  display: none; }
+.legend{
+    margin-bottom:76px;
+    display:inline-block;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+.legend td{
+    padding:4px 5px;
+    vertical-align:bottom;
+}
+.legendFreq, .legendPerc{
+    align:right;
+    width:50px;
+}
+/* End of Dash CSS */
 
-.bullet { font: 10px sans-serif; }
-.bullet .marker { stroke: #000; stroke-width: 2px; }
-.bullet .tick line { stroke: #666; stroke-width: .5px; }
-.bullet .range.s0 { fill: #eee; }
-.bullet .range.s1 { fill: #ddd; }
-.bullet .range.s2 { fill: #ccc; }
-.bullet .measure.s0 { fill: lightsteelblue; }
-.bullet .measure.s1 { fill: steelblue; }
-.bullet .title { font-size: 14px; font-weight: bold; }
-.bullet .subtitle { fill: #999; }
-
-/* end of Bullet CSS */
 
 @media screen and (max-width:768px){
   .primary-content{

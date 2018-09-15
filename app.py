@@ -14,6 +14,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 import geopandas as gpd
 
+from decimal import *
+
 app = Flask(__name__)
 
 #################################################
@@ -40,6 +42,7 @@ def welcome():
     e = "<h3>/coord-json</h3>"
     f = "<h3>/pie-json</h3>"
     g = "<h3>/map-geojson</h3>"
+    h = "<h3>/summary-json</h3>"
 
     return a+b+c+d+e+g
 
@@ -65,6 +68,10 @@ def bullet():
 @app.route("/box")
 def box():
     return render_template('testbox.html')
+
+@app.route("/dash")
+def dash():
+    return render_template('dash.html')
 
 
 @app.route("/listingsall")
@@ -136,5 +143,23 @@ def get_mapdata():
    #04 Render to site
    return jsonify(geodict)
 
+@app.route("/summary-json")
+def get_summary():
+    response = engine.execute('SELECT * FROM listings').fetchall()
+    response_df = pd.DataFrame(response)
+    header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
+            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
+            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
+            'reviews_per_month']
+    response_df.columns = header
+    price_df = response_df[["property_type","price"]]
+
+    grouped_df = price_df.groupby('property_type', as_index=False).price.agg(['min','mean','max'])
+    #grouped_df['mean'] = grouped_df['mean'].map('{:,.2f}'.format)
+    grouped_df.reset_index(inplace = True )
+    return_file = json.loads(grouped_df.to_json(orient='index'))
+    #print(type(return_file))  #it's a string
+    return jsonify(return_file)
+    
 if __name__ == "__main__":
     app.run()
