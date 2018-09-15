@@ -9,6 +9,10 @@ body {
 #map {
   height: 300px;
 }
+
+#map-choro{
+  height: 300px;
+}
 /* .container{
   padding: 0px 0px 15px 0px;
 } */
