@@ -11,12 +11,12 @@ var light = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?ac
     accessToken: API_KEY
     });
 
-var dark = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-  maxZoom: 18,
-  id: "mapbox.dark",
-  accessToken: API_KEY
-});
+// var dark = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+//   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+//   maxZoom: 18,
+//   id: "mapbox.dark",
+//   accessToken: API_KEY
+// });
 var featureList = data;
     
 //var listingMarkers = [];
@@ -36,8 +36,8 @@ var listingLayer = L.layerGroup(cMarkers);
 
     // Only one base layer can be shown at a time
     var baseMaps = {
-        Light: light,
-        Dark: dark
+        Light: light
+        //Dark: dark
     };
 
     var overlayMaps = {
@@ -54,7 +54,7 @@ var listingLayer = L.layerGroup(cMarkers);
     var url = "/map-geojson";
     d3.json(url, function(data) {
         // Create a new choropleth layer
-        L.choropleth(data, {
+        var geojson = L.choropleth(data, {
       
           // Define what  property in the features to use
           valueProperty: "price",
@@ -74,7 +74,35 @@ var listingLayer = L.layerGroup(cMarkers);
             fillOpacity: 0.8
           },
           onEachFeature: function(feature, layer) {
-            layer.bindPopup(feature.properties.neighbourhood + "<br>" + feature.properties.price );
+            layer.bindPopup(feature.properties.neighbourhood + "<br>" + parseFloat(feature.properties.price).toFixed(2));
           }
         }).addTo(myMap);
+
+        var legend = L.control({ position: "bottomleft" });
+        legend.onAdd = function() {
+        var div = L.DomUtil.create("div", "info legend white maplegend");
+        var limits = geojson.options.limits;
+        var colors = geojson.options.colors;
+        var labels = [];
+    
+        // Add min & max
+        var legendInfo = "<h4>Median Income</h4>" +
+            "<div class=\"labels\">" +
+            "<div style='font-size:12px;'>" + limits[0] + "</div>" +
+            "</div>";
+    
+        div.innerHTML = legendInfo;
+    
+        limits.forEach(function(limit, index) {
+            labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+        });
+    
+        div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+        div.innerHTML += "<div style='font-size:12px;'>" + (limits[limits.length - 1]).toFixed(2) + "</div>";
+            
+        return div;
+    };
+  
+    // Adding legend to the map
+    legend.addTo(myMap);
     });

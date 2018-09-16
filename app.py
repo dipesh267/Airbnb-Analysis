@@ -173,12 +173,13 @@ def list_byarea():
     grouped_df = response_df.groupby('neighbourhood', as_index=False).price.agg(['count'])
     #grouped_df['mean'] = grouped_df['mean'].map('{:,.2f}'.format)
     grouped_df.reset_index(inplace = True )
+    grouped_df = grouped_df.rename(columns={'count': 'value'})
     return_file = json.loads(grouped_df.to_json(orient='index'))
     #print(type(return_file))  #it's a string
     return jsonify(return_file)
 
-@app.route("/bedprice-json")
-def bedprice():
+@app.route("/maxprice-json")
+def maxprice():
     response = engine.execute('SELECT * FROM listings').fetchall()
     response_df = pd.DataFrame(response)
     header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
@@ -186,10 +187,10 @@ def bedprice():
             'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
             'reviews_per_month']
     response_df.columns = header
-    response_df.reset_index(inplace = True )
-    price_df = response_df[["neighbourhood","bedrooms","price"]]
-    #new_df =  price_df.groupby('neighbourhood').groups
-    return_file = json.loads(price_df.to_json(orient='index'))
+    new_df = response_df.groupby('neighbourhood', as_index=False).price.agg("max")
+    new_df.reset_index(inplace = True )
+    new_df = new_df.rename(columns={'price': 'value'})
+    return_file = json.loads(new_df.to_json(orient='index'))
     #print(type(return_file))  #it's a string
     return jsonify(return_file)
 

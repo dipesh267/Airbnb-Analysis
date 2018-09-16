@@ -44,6 +44,10 @@ body {
 .labels li {
   width:20px;
 }
+/* below css adjust li inside ul insidel maplegend */
+.maplegend ul li{
+  height: 10px;
+}
 .table {
   font-size: 10px;
 }
