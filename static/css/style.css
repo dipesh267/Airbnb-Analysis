@@ -10,12 +10,19 @@ body {
   height: 300px;
 }
 
-#map-choro{
-  height: 300px;
-}
-
 #bar_plot{
   height: 500px;
+}
+
+#reportHeader{
+  color: tomato;
+  text-align: center;
+  font-family: 'Roboto Slab', serif;
+}
+.reportline{
+  color: darkcyan;
+  font-size: 15px;
+  font-family: 'Roboto Slab', serif;
 }
 /* .container{
   padding: 0px 0px 15px 0px;
@@ -117,7 +124,8 @@ font-family: 'Roboto Slab', serif;
 
 .btn {
   padding: 5px 60px;
-  font-size: 30px;
+  text-anchor: left;
+  font-size: 20px;
   color: cornflowerblue;
   border-radius: 5px;
   font-family: 'Roboto Slab', serif;
@@ -153,7 +161,6 @@ rect:hover {  fill:blue; }
     vertical-align:bottom;
 }
 .legendFreq, .legendPerc{
-    align:right;
     width:50px;
 }
 /* End of Dash CSS */

@@ -69,13 +69,13 @@
     </div>
     <div class="container" id="button_container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <button id="button1" type="button" class="btn btn-default btn-md center-block">Listings</button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <button id="button2" type="button" class="btn btn-default btn-md center-block">Max Price</button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                 </div>
             </div>
     </div>
@@ -88,6 +88,32 @@
             </div>
 
             <div class="primary-content col-md-6">
+                <div id="reportHeader"><h1>Airbnb Report</h1></div>
+                <div class="row reportline">
+                    <p>
+                        The report is built from third party scraped data in a csv format. 
+                        It includes Airbnb listings data which consists of price, listing id, 
+                        ratings, longitude, latitude etc.
+                    </p>
+                    <p>
+                        The map is composed of geojson data on neighborhood with color coding 
+                        based on average price of the listing. It also includes a clustered
+                        layer of listings with listing price.
+                    </p>
+                    <p>
+                        The bar chart is iterchangeable on neighborhood and total listings
+                        offered or neighborhood and maxium price for the listing on the
+                        specific neighborhood. 
+                    </p>
+                    <p>
+                        The mini dashboard displays data based on the type of listing with 
+                        minimum, average, and maximum price offered for that type of listing. 
+                        The top of the barchart display the total price combined for low, mid, and 
+                        high. The Pie chart displays the same data in color coded format. <br>
+                        The Pie chart, when hovered over, displays the high price, low price, and mid 
+                        price for each type of listing in the bar chart. 
+                    </p>
+                </div>
                 <!-- <script src="{{url_for('static', filename='js/pie.js')}}"></script>
                 <div id="pie"></div> -->
             </div>    
