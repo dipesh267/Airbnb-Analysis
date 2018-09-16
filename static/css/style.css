@@ -1,5 +1,5 @@
 body {
-    background-color:lightgrey;
+    background-color:white;
   }
   
   html {
@@ -12,6 +12,10 @@ body {
 
 #map-choro{
   height: 300px;
+}
+
+#bar_plot{
+  height: 500px;
 }
 /* .container{
   padding: 0px 0px 15px 0px;
@@ -37,6 +41,9 @@ body {
     opacity: 0.7;
 }
 
+.labels li {
+  width:20px;
+}
 .table {
   font-size: 10px;
 }

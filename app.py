@@ -65,9 +65,9 @@ def get_landing():
 def bullet():
     return render_template('testbullet.html')
 
-@app.route("/box")
-def box():
-    return render_template('testbox.html')
+@app.route("/map")
+def bar():
+    return render_template('tempmapping.html')
 
 @app.route("/dash")
 def dash():
@@ -161,5 +161,37 @@ def get_summary():
     #print(type(return_file))  #it's a string
     return jsonify(return_file)
     
+@app.route("/list-count-json")
+def list_byarea():
+    response = engine.execute('SELECT * FROM listings').fetchall()
+    response_df = pd.DataFrame(response)
+    header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
+            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
+            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
+            'reviews_per_month']
+    response_df.columns = header
+    grouped_df = response_df.groupby('neighbourhood', as_index=False).price.agg(['count'])
+    #grouped_df['mean'] = grouped_df['mean'].map('{:,.2f}'.format)
+    grouped_df.reset_index(inplace = True )
+    return_file = json.loads(grouped_df.to_json(orient='index'))
+    #print(type(return_file))  #it's a string
+    return jsonify(return_file)
+
+@app.route("/bedprice-json")
+def bedprice():
+    response = engine.execute('SELECT * FROM listings').fetchall()
+    response_df = pd.DataFrame(response)
+    header = ['id','listing_url','name','picture_url','host_name','host_response','host_is_superhost','host_has_profile_pic',
+            'host_thumbnail_url','host_picture_url','neighbourhood','property_type','bedrooms','bathrooms','price',
+            'weekly_price','monthly_price','availability_365','longitude','latitude','number_of_reviews','review_scores_rating',
+            'reviews_per_month']
+    response_df.columns = header
+    response_df.reset_index(inplace = True )
+    price_df = response_df[["neighbourhood","bedrooms","price"]]
+    #new_df =  price_df.groupby('neighbourhood').groups
+    return_file = json.loads(price_df.to_json(orient='index'))
+    #print(type(return_file))  #it's a string
+    return jsonify(return_file)
+
 if __name__ == "__main__":
     app.run()

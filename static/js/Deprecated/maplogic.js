@@ -51,16 +51,16 @@ d3.json(APILink, function(data) {
     // Set up the legend
     var legend = L.control({ position: "bottomright" });
     legend.onAdd = function() {
-      var div = L.DomUtil.create("div", "info legend");
+      var div = L.DomUtil.create("div", "info legend white");
       var limits = geojson.options.limits;
       var colors = geojson.options.colors;
       var labels = [];
   
       // Add min & max
-      var legendInfo = "<h1>Median Income</h1>" +
+      var legendInfo = "<h4>Median Income</h4>" +
         "<div class=\"labels\">" +
-          "<div class=\"min\">" + limits[0] + "</div>" +
-          "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+          "<div style='font-size:12px;'>" + limits[0] + "</div>" +
+          "<div style='font-size:12px;'>" + (limits[limits.length - 1]).toFixed(2) + "</div>" +
         "</div>";
   
       div.innerHTML = legendInfo;
