@@ -31,7 +31,6 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!--script type="text/javascript" src="static/js/choropleth.js"></script-->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script type="text/javascript" src="static/js/choropleth.js"></script>
     <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
@@ -130,30 +129,7 @@
                 </div>
             </div>
         </div>
-        <hr class="hr-other">
     </div>
-    <div class="container" id="chartjs_container" >
-        <div class="row">
-            <div class="primary-content col-md-6 centered" id="chartjs_chart">
-                <canvas id="myChartjs"></canvas>
-            </div>
-            <div class=" primary-content col-md-6 centered" id="chartjs_desc">
-                <div id="reportHeader"><h1>Chart.js</h1></div>
-                <div class="row reportline">
-                    <p>
-                        "Simple, clean and engaging HTML5 based JavaScript charts. 
-                        Chart.js is an easy way to include animated, interactive 
-                        graphs on your website for free."
-                    </p>
-                    <p>
-                        The Doughnut chart displays number of listing based on
-                        the number of bedrooms.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="{{url_for('static', filename='js/newbar.js')}}"></script>
     </body>
 
     <div class="container">
