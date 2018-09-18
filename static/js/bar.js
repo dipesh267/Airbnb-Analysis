@@ -1,9 +1,9 @@
 /* pie route */
-var url = "/list-count-json";
+var barUrl = "/list-count-json";
 var chartTitle = "Listings per Neighbourhood";
 var chartYaxis = "Number of Listings";
 function buildPlot() {
-  d3.json(url, function(response) {
+  d3.json(barUrl, function(response) {
       //console.log(response);
     var myData = Object.values(response); 
     //console.log(myData);
@@ -28,7 +28,7 @@ function handleSubmit1() {
   // Prevent the page from refreshing
   d3.event.preventDefault();
   // Build the plot with the new stock
-  url = "/list-count-json";
+  barUrl = "/list-count-json";
   chartTitle = "Listings per Neighbourhood"; 
   chartYaxis = "Number of Listings";
   buildPlot();
@@ -38,7 +38,7 @@ function handleSubmit2() {
   // Prevent the page from refreshing
   d3.event.preventDefault();
   // Build the plot with the new stock
-  url = "/maxprice-json";
+  barUrl = "/maxprice-json";
   chartTitle = "Max Price per Neighbourhood";
   chartYaxis = "Max Price";
   buildPlot();

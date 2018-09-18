@@ -27,17 +27,19 @@ engine = create_engine("sqlite:///db/airbnb.sqlite", echo=False)
 @app.route("/")
 def welcome():
     a = "<h1>These are the valid endpoints in this project</h1>"
-    b = "<h3>/index</h3>"
-    c = "<h3>/listingsall</h3>"
-    d = "<h3>/listings-json</h3>"
-    e = "<h3>/coord-json</h3>"
-    f = "<h3>/pie-json</h3>"
-    g = "<h3>/map-geojson</h3>"
-    h = "<h3>/summary-json</h3>"
-    i = "<h3>/maxprice-json</h3>"
-    j = "<h3>/list-count-json</h3>"
-    k = "<h3>/bedroomprice-json</h3>"
-    return a+b+c+d+e+g+h+i+j+k
+    b = "<a href='http://127.0.0.1:5000/index'><h3>/index</h3></a>"
+    c = "<a href='http://127.0.0.1:5000/listingsall'><h3>/listingsall</h3>"
+    d = "<a href='http://127.0.0.1:5000/listings-json'><h3>/listings-json</h3>"
+    e = "<a href='http://127.0.0.1:5000/coord-json'><h3>/coord-json</h3>"
+    f = "<a href='http://127.0.0.1:5000/pie-json'><h3>/pie-json</h3>"
+    g = "<a href='http://127.0.0.1:5000/map-geojson'><h3>/map-geojson</h3>"
+    h = "<a href='http://127.0.0.1:5000/summary-json'><h3>/summary-json</h3>"
+    i = "<a href='http://127.0.0.1:5000/maxprice-json'><h3>/maxprice-json</h3>"
+    j = "<a href='http://127.0.0.1:5000/list-count-json'><h3>/list-count-json</h3>"
+    k = "<a href='http://127.0.0.1:5000/bedroomprice-json'><h3>/bedroomprice-json</h3>"
+    l = "<a href='http://127.0.0.1:5000/avail-json'><h3>/avail-json</h3>"
+
+    return a+b+c+d+e+g+h+i+j+k+l
 
 @app.route("/index")
 def get_landing():
@@ -192,6 +194,21 @@ def bedroomprice():
     new_df.reset_index(inplace = True )
     new_df = new_df.rename(columns={'price': 'value'})
     return_file = json.loads(new_df.to_json(orient='index'))
+    return jsonify(return_file)
+
+@app.route("/avail-json")
+def availability():
+    #01 Read in data
+    path = "static/data/calendar.csv"
+    data = pd.read_csv(path, encoding="ISO-8859-1")
+
+    grouped = data.groupby(['date','available']).count()
+    grouped = grouped.drop(labels='price', axis=1)
+
+    grouped = grouped.reset_index()
+    grouped = grouped.rename(columns={'listing_id': 'count'})
+
+    return_file = json.loads(grouped.to_json(orient='index'))
     return jsonify(return_file)
 
 if __name__ == "__main__":
