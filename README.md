@@ -7,7 +7,7 @@ Analysis of Airbnb listings in the city of San Francisco. The charts and mapping
 * [Bootstrap](https://getbootstrap.com/) - The web template used
 * Jupyter Notebook - Data cleaning, engineering, formatting. 
 * Sqllite - Cleaned Data storage
-* Python- Web hosting
+* Python/flask- Web hosting
 
 ## Authors
 
