@@ -13,3 +13,4 @@ Analysis of Airbnb listings in the city of San Francisco. The charts and mapping
 
 * **Dipesh Manandhar** (https://github.com/dipesh267)
 
+![Screenshot](Resources/images/latitude_temp.png "Lattitude vs. Temp")
