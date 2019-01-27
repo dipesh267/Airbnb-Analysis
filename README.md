@@ -8,6 +8,8 @@ Analysis of Airbnb listings in the city of San Francisco. The charts and mapping
 * Jupyter Notebook - Data cleaning, engineering, formatting. 
 * Sqllite - Cleaned Data storage
 * Python/flask- Web hosting
+* D3 - Charts
+* Plotly - Charts
 
 ## Authors
 
