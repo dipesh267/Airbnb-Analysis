@@ -13,4 +13,7 @@ Analysis of Airbnb listings in the city of San Francisco. The charts and mapping
 
 * **Dipesh Manandhar** (https://github.com/dipesh267)
 
-![Screenshot](Resources/images/latitude_temp.png "Lattitude vs. Temp")
+![Screenshot](screenshots/airbnb_listings.png "Airbnb Listings cluster")
+![Screenshot](screenshots/listings_per_neighbor.png "Airbnb Listings cluster")
+![Screenshot](screenshots/price_per_type.png "Airbnb Listings cluster")
+
